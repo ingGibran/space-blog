@@ -1,0 +1,745 @@
+/* ============================================
+   CSS VARIABLES - Dark Theme Color Palette
+   ============================================ */
+:root {
+    /* Core Required Variables */
+    --bg-dark: #1A1A1A;
+    /* Very dark background */
+    --text-light: #FFFFFF;
+    /* Pure white text */
+    --accent-purple: #BB86FC;
+    /* Vibrant purple accent */
+
+    /* Background Colors - Dark Theme */
+    --bg-darker: #0a0612;
+    /* Nearly black */
+    --bg-primary: #2e1a4b;
+    /* Dark purple (main) */
+    --bg-secondary: #4a2c6b;
+    /* Medium dark purple */
+    --bg-card: rgba(78, 44, 107, 0.3);
+    /* Translucent card background */
+    --bg-card-hover: rgba(78, 44, 107, 0.5);
+    /* Card hover state */
+
+    /* Text Colors - White & Light */
+    --text-white: #ffffff;
+    /* Pure white */
+    --text-medium: #e9d8fd;
+    /* Light purple */
+    --text-soft: #d6bcfa;
+    /* Soft purple */
+
+    /* Accent Colors - Purple Spectrum */
+    --accent-purple-primary: #9f7aea;
+    /* Primary purple */
+    --accent-purple-secondary: #b794f6;
+    /* Secondary purple */
+    --accent-purple-light: #f3e7ff;
+    /* Light purple */
+
+    /* Border & Outline Colors */
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-medium: rgba(187, 134, 252, 0.2);
+    --border-bright: rgba(187, 134, 252, 0.6);
+
+    /* Shadow Colors */
+    --shadow-purple: rgba(187, 134, 252, 0.4);
+    --shadow-purple-hover: rgba(187, 134, 252, 0.6);
+    --shadow-purple-strong: rgba(187, 134, 252, 0.7);
+
+    /* Overlay Colors */
+    --overlay-light: rgba(255, 255, 255, 0.2);
+    --overlay-purple: rgba(187, 134, 252, 0.1);
+    --overlay-purple-medium: rgba(187, 134, 252, 0.15);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Headings use accent purple */
+h1,
+h2 {
+    color: var(--accent-purple);
+}
+
+/* Links use accent purple */
+a {
+    color: var(--accent-purple);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--text-light);
+    text-decoration: underline;
+}
+
+/* Animated space background with gradient */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top,
+            var(--bg-secondary) 0%,
+            var(--bg-dark) 50%,
+            var(--bg-darker) 100%);
+    z-index: -2;
+}
+
+/* ============================================
+   STARFIELD EFFECT
+   ============================================ */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: var(--text-white);
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* ============================================
+   HEADER NAVIGATION
+   ============================================ */
+header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(10px);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg,
+            var(--accent-purple) 0%,
+            var(--text-light) 50%,
+            var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px var(--shadow-purple);
+}
+
+nav {
+    display: flex;
+    gap: 1rem;
+}
+
+nav form {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-btn {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--overlay-light);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.nav-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-signup {
+    background: linear-gradient(135deg,
+            var(--accent-purple-primary) 0%,
+            var(--accent-purple-secondary) 100%);
+    color: var(--text-white);
+    box-shadow: 0 4px 15px var(--shadow-purple);
+    position: relative;
+    z-index: 1;
+}
+
+.btn-signup:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px var(--shadow-purple-hover);
+}
+
+.btn-login {
+    background: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--accent-purple);
+    position: relative;
+    z-index: 1;
+}
+
+.btn-login:hover {
+    background: var(--overlay-purple);
+    border-color: var(--accent-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--shadow-purple);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px);
+    padding: 2rem;
+    text-align: center;
+}
+
+.hero-section {
+    max-width: 800px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg,
+            var(--text-light) 0%,
+            var(--accent-purple) 50%,
+            var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    text-shadow: 0 0 40px var(--shadow-purple);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--text-medium);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-soft);
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* ============================================
+   CALL TO ACTION BUTTONS
+   ============================================ */
+.cta-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn {
+    padding: 1rem 3rem;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-primary {
+    background: linear-gradient(135deg,
+            var(--accent-purple-primary) 0%,
+            var(--accent-purple-secondary) 100%);
+    color: var(--text-white);
+    box-shadow: 0 8px 30px rgba(159, 122, 234, 0.5);
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 40px var(--shadow-purple-strong);
+}
+
+.cta-secondary {
+    background: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--accent-purple);
+    box-shadow: 0 4px 20px var(--border-medium);
+}
+
+.cta-secondary:hover {
+    background: var(--overlay-purple-medium);
+    border-color: var(--accent-purple);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 30px var(--shadow-purple);
+}
+
+/* ============================================
+   DECORATIVE COSMIC ORBS
+   ============================================ */
+.cosmic-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle,
+            var(--accent-purple-primary) 0%,
+            transparent 70%);
+    top: -100px;
+    right: -100px;
+    animation: pulse 8s ease-in-out infinite;
+}
+
+.orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle,
+            var(--accent-purple-secondary) 0%,
+            transparent 70%);
+    bottom: -50px;
+    left: -50px;
+    animation: pulse 6s ease-in-out infinite reverse;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+.features {
+    margin-top: 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    width: 100%;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--border-bright);
+    box-shadow: 0 10px 40px var(--shadow-purple);
+    background: var(--bg-card-hover);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-medium);
+}
+
+.feature-text {
+    color: var(--text-soft);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .cta-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   FORM STYLES - Signup Page
+   ============================================ */
+
+/* Form Group Container */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Labels */
+.form-group label {
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Required Field Indicator */
+.form-group label .required {
+    color: var(--accent-purple);
+    font-size: 1.2rem;
+}
+
+/* Form Inputs and Select */
+.form-group input,
+.form-group select {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--border-medium);
+    border-radius: 12px;
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Input Focus State */
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--accent-purple);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Input Hover State */
+.form-group input:hover,
+.form-group select:hover {
+    border-color: var(--border-bright);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Placeholder Styling */
+.form-group input::placeholder {
+    color: var(--text-soft);
+    opacity: 0.6;
+}
+
+/* Select Dropdown */
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23BB86FC' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* Select Options */
+.form-group select option {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    padding: 0.5rem;
+}
+
+/* Input Validation States */
+.form-group input:valid:not(:placeholder-shown) {
+    border-color: rgba(139, 195, 74, 0.5);
+}
+
+.form-group input:invalid:not(:placeholder-shown) {
+    border-color: rgba(244, 67, 54, 0.5);
+}
+
+/* Form Hint Text */
+.form-hint {
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    font-style: italic;
+    margin-top: -0.5rem;
+}
+
+/* Date Input Styling */
+.form-group input[type="date"] {
+    position: relative;
+    cursor: pointer;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(1) brightness(0.8);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.form-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
+
+/* Form Row for Side-by-Side Inputs */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form Footer */
+.form-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.form-footer p {
+    color: var(--text-soft);
+    font-size: 0.95rem;
+}
+
+/* Submit Button Loading State */
+.cta-btn.loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.cta-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 3px solid var(--text-light);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Form Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply animation to feature-card when used as form container */
+.features .feature-card form {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive Form Styles */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 0.95rem;
+        padding: 0.875rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+}
+
+/* Focus-visible for better accessibility */
+.form-group input:focus-visible,
+.form-group select:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+}
+
+/* Disabled state */
+.form-group input:disabled,
+.form-group select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Error message styling */
+.form-error {
+    color: rgba(244, 67, 54, 0.9);
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-error::before {
+    content: '⚠';
+    font-size: 1rem;
+}
+
+/* Success message styling */
+.form-success {
+    color: rgba(139, 195, 74, 0.9);
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-success::before {
+    content: '✓';
+    font-size: 1rem;
+}

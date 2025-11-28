@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Welcome to Space Post - Enter a space to be yourself and share ideas with all your intergalactic neighbors">
+    <title>Space Post - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
+</head>
+
+<body>
+    <!-- Starfield -->
+    <div class="stars" id="starfield"></div>
+
+    <!-- Cosmic orbs -->
+    <div class="cosmic-orb orb-1"></div>
+    <div class="cosmic-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <a href="{% url 'menu:menu' %}">
+            <div class="logo">SPACE POST</div>
+        </a>
+        <nav>
+            <form action="{% url 'menu:menu_signup' %}">
+                <button class="nav-btn btn-signup">Sign Up</button>
+            </form>
+
+            <form action="{% url 'menu:menu_login' %}">
+                <button class="nav-btn btn-login">Log In</button>
+            </form>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero-section">
+            <h1 class="hero-title">Welcome to your Space</h1>
+            <p class="hero-subtitle">Your Gateway to Infinite Ideas</p>
+            <p class="hero-description">
+                Enter a space to be yourself and share ideas with all your intergalactic neighbors.
+                Feel free to post or reply to different posts.
+                At Space Post we respect the freedom of expression of the galaxy.
+            </p>
+            <div class="cta-container">
+                <button class="cta-btn cta-primary">Start Exploring</button>
+                <button class="cta-btn cta-secondary">Learn More</button>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">✨</div>
+                <h3 class="feature-title">Stellar Content</h3>
+                <p class="feature-text">Curated articles that shine bright with quality and insight.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌌</div>
+                <h3 class="feature-title">Vast Community</h3>
+                <p class="feature-text">Connect with writers and readers across the galaxy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Launch Your Voice</h3>
+                <p class="feature-text">Share your stories and ideas with the universe.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Generate random stars
+        function createStars() {
+            const starfield = document.getElementById('starfield');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+
+                starfield.appendChild(star);
+            }
+        }
+
+        // Initialize stars on page load
+        createStars();
+
+        // Add click handlers for buttons (you can customize these)
+        document.querySelectorAll('.nav-btn, .cta-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                console.log('Button clicked:', this.textContent);
+                // Add your navigation logic here
+            });
+        });
+    </script>
+</body>
+
+</html>

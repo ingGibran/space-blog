@@ -1,0 +1,352 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts - Space Blog</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="{% static 'posts/styles.css' %}">
+</head>
+
+<body class="gradient-purple min-h-screen text-white">
+
+    <!-- Fixed Top Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-purple-500/30">
+        <div class="max-w-full px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo/Brand -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full gradient-button flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <h1
+                        class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        Space Blog
+                    </h1>
+                </div>
+
+                <!-- User Greeting and Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Greeting -->
+                    <span class="hidden sm:block text-purple-200 font-medium">
+                        Hello, <span class="text-white font-semibold">{{ user.username }}</span>
+                    </span>
+
+                    <!-- Options Button -->
+                    <button id="toggleSidebar"
+                        class="glass px-4 py-2 rounded-lg smooth-transition hover:bg-purple-500/30 flex items-center space-x-2">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                        <span class="hidden md:inline">Options</span>
+                    </button>
+
+                    <!-- Settings Button -->
+                    <button class="gradient-button px-4 py-2 rounded-lg smooth-transition flex items-center space-x-2">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                        <span class="hidden md:inline">Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout Container -->
+    <div class="flex pt-16 min-h-screen">
+
+        <!-- Sidebar (Vertical Navigation Menu) -->
+        <aside id="rightSidebar"
+            class="hidden fixed right-0 top-16 bottom-0 w-64 glass border-l border-purple-500/30 overflow-y-auto transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+            <div class="p-6">
+                <!-- Close Button -->
+                <button id="closeSidebar"
+                    class="lg:hidden absolute top-4 right-4 text-purple-300 hover:text-white smooth-transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                <h2 class="text-sm font-semibold text-purple-300 uppercase tracking-wider mb-4">
+                    Navigation
+                </h2>
+
+                <!-- Navigation Items -->
+                <nav class="space-y-2">
+                    <!-- My Posts -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="file-text" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">My Posts</span>
+                    </a>
+
+                    <!-- New Post -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">New Post</span>
+                    </a>
+
+                    <!-- Saved -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="bookmark" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Saved</span>
+                    </a>
+
+                    <!-- Discover -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="compass" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Discover</span>
+                    </a>
+
+                    <!-- Trending -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="trending-up" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Trending</span>
+                    </a>
+
+                    <!-- Favorites -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="heart" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Favorites</span>
+                    </a>
+                </nav>
+
+                <!-- Divider -->
+                <div class="my-6 border-t border-purple-500/30"></div>
+
+                <!-- Additional Options -->
+                <h2 class="text-sm font-semibold text-purple-300 uppercase tracking-wider mb-4">
+                    More
+                </h2>
+
+                <nav class="space-y-2">
+                    <!-- Analytics -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Analytics</span>
+                    </a>
+
+                    <!-- Profile -->
+                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="user" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Profile</span>
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+
+        <!-- Main Content Area (Post Feed) -->
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <div class="max-w-4xl mx-auto">
+
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <h1
+                        class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+                        Your Feed
+                    </h1>
+                    <p class="text-purple-200">
+                        Discover the latest posts from the community
+                    </p>
+                </div>
+
+                <!-- Placeholder Content -->
+                <div class="glass rounded-2xl p-12 text-center min-h-[500px] flex flex-col items-center justify-center">
+                    <!-- Sparkle Icon -->
+                    <div class="mb-6 relative">
+                        <div class="w-24 h-24 rounded-full gradient-button flex items-center justify-center sparkle">
+                            <i data-lucide="rss" class="w-12 h-12"></i>
+                        </div>
+                        <!-- Decorative circles -->
+                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-pink-500 opacity-50 sparkle"
+                            style="animation-delay: 0.5s;"></div>
+                        <div class="absolute -bottom-2 -left-2 w-6 h-6 rounded-full bg-purple-500 opacity-50 sparkle"
+                            style="animation-delay: 1s;"></div>
+                    </div>
+
+                    <h2 class="text-2xl font-bold mb-3 text-white">
+                        Future Post Feed
+                    </h2>
+                    <p class="text-purple-200 mb-6 max-w-md">
+                        This is where your blog posts will appear. The feed will display posts from authors you follow
+                        and trending content.
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button
+                            class="gradient-button px-6 py-3 rounded-lg font-semibold smooth-transition hover:shadow-lg hover:shadow-purple-500/50 flex items-center space-x-2">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
+                            <span>Create Your First Post</span>
+                        </button>
+                        <button
+                            class="glass px-6 py-3 rounded-lg font-semibold smooth-transition hover:bg-purple-500/30 flex items-center space-x-2">
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                            <span>Explore Posts</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sample Post Cards (for demonstration) -->
+                <div class="mt-8 space-y-6">
+                    <h3 class="text-xl font-semibold text-purple-200 mb-4">
+                        Preview: Sample Posts
+                    </h3>
+
+                    <!-- Sample Post 1 -->
+                    <article
+                        class="glass rounded-xl p-6 smooth-transition hover:bg-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20">
+                        <div class="flex items-start space-x-4">
+                            <!-- Author Avatar -->
+                            <div
+                                class="w-12 h-12 rounded-full gradient-button flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+
+                            <!-- Post Content -->
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="font-semibold text-white">Author Name</span>
+                                    <span class="text-purple-300 text-sm">• 2 hours ago</span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white mb-2">
+                                    Sample Post Title: Exploring the Cosmos
+                                </h4>
+                                <p class="text-purple-200 mb-4">
+                                    This is a sample post description. In the future, this area will display the actual
+                                    content from your blog posts...
+                                </p>
+
+                                <!-- Post Actions -->
+                                <div class="flex items-center space-x-6 text-sm">
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="heart" class="w-4 h-4"></i>
+                                        <span>42 likes</span>
+                                    </button>
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                        <span>12 comments</span>
+                                    </button>
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="share-2" class="w-4 h-4"></i>
+                                        <span>Share</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Sample Post 2 -->
+                    <article
+                        class="glass rounded-xl p-6 smooth-transition hover:bg-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20">
+                        <div class="flex items-start space-x-4">
+                            <!-- Author Avatar -->
+                            <div
+                                class="w-12 h-12 rounded-full gradient-button flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="user" class="w-6 h-6"></i>
+                            </div>
+
+                            <!-- Post Content -->
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="font-semibold text-white">Another Author</span>
+                                    <span class="text-purple-300 text-sm">• 5 hours ago</span>
+                                </div>
+                                <h4 class="text-lg font-semibold text-white mb-2">
+                                    Journey Through the Stars
+                                </h4>
+                                <p class="text-purple-200 mb-4">
+                                    Another sample post to demonstrate the feed layout. Your actual posts will appear
+                                    here with full content and interactions...
+                                </p>
+
+                                <!-- Post Actions -->
+                                <div class="flex items-center space-x-6 text-sm">
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="heart" class="w-4 h-4"></i>
+                                        <span>87 likes</span>
+                                    </button>
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                                        <span>23 comments</span>
+                                    </button>
+                                    <button
+                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
+                                        <i data-lucide="share-2" class="w-4 h-4"></i>
+                                        <span>Share</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+
+        // Sidebar toggle functionality
+        const toggleSidebarBtn = document.getElementById('toggleSidebar');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+        const rightSidebar = document.getElementById('rightSidebar');
+
+        function openSidebar() {
+            rightSidebar.classList.remove('hidden');
+            // Small delay to allow display change before animation
+            setTimeout(() => {
+                rightSidebar.classList.remove('translate-x-full');
+            }, 10);
+            // Re-initialize icons for the sidebar
+            lucide.createIcons();
+        }
+
+        function closeSidebar() {
+            rightSidebar.classList.add('translate-x-full');
+            // Wait for animation to complete before hiding
+            setTimeout(() => {
+                rightSidebar.classList.add('hidden');
+            }, 300);
+        }
+
+        toggleSidebarBtn.addEventListener('click', () => {
+            if (rightSidebar.classList.contains('hidden') || rightSidebar.classList.contains('translate-x-full')) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+        });
+
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+
+        // Close sidebar when clicking outside (optional)
+        document.addEventListener('click', (e) => {
+            if (!rightSidebar.contains(e.target) &&
+                !toggleSidebarBtn.contains(e.target) &&
+                !rightSidebar.classList.contains('hidden') &&
+                !rightSidebar.classList.contains('translate-x-full')) {
+                closeSidebar();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,211 @@
+/* ============================================
+   CSS VARIABLES - Dark Purple Theme
+   ============================================ */
+:root {
+    /* Background Colors - Dark Purple Gradient */
+    --bg-darker: #0a0612;
+    --bg-dark: #1A1A1A;
+    --bg-primary: #2e1a4b;
+    --bg-secondary: #4a2c6b;
+    --bg-card: rgba(78, 44, 107, 0.3);
+    --bg-card-hover: rgba(78, 44, 107, 0.5);
+
+    /* Text Colors - White & Purple */
+    --text-white: #ffffff;
+    --text-light: #FFFFFF;
+    --text-medium: #e9d8fd;
+    --text-soft: #d6bcfa;
+
+    /* Accent Colors - Purple Spectrum */
+    --accent-purple: #BB86FC;
+    --accent-purple-primary: #9f7aea;
+    --accent-purple-secondary: #b794f6;
+    --accent-purple-light: #f3e7ff;
+
+    /* Border & Outline Colors */
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-medium: rgba(187, 134, 252, 0.2);
+    --border-bright: rgba(187, 134, 252, 0.6);
+
+    /* Shadow Colors */
+    --shadow-purple: rgba(187, 134, 252, 0.4);
+    --shadow-purple-hover: rgba(187, 134, 252, 0.6);
+    --shadow-purple-strong: rgba(187, 134, 252, 0.7);
+
+    /* Overlay Colors */
+    --overlay-light: rgba(255, 255, 255, 0.2);
+    --overlay-purple: rgba(187, 134, 252, 0.1);
+    --overlay-purple-medium: rgba(187, 134, 252, 0.15);
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Dark purple gradient background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at top,
+            var(--bg-secondary) 0%,
+            var(--bg-dark) 50%,
+            var(--bg-darker) 100%);
+    z-index: -2;
+}
+
+/* ============================================
+   GRADIENT BACKGROUNDS
+   ============================================ */
+.gradient-purple {
+    background: radial-gradient(ellipse at top,
+            var(--bg-secondary) 0%,
+            var(--bg-dark) 50%,
+            var(--bg-darker) 100%);
+}
+
+.gradient-button {
+    background: linear-gradient(135deg,
+            var(--accent-purple-primary) 0%,
+            var(--accent-purple-secondary) 100%);
+    box-shadow: 0 4px 15px var(--shadow-purple);
+}
+
+.gradient-button:hover {
+    background: linear-gradient(135deg,
+            var(--accent-purple-secondary) 0%,
+            var(--accent-purple-light) 100%);
+    box-shadow: 0 6px 25px var(--shadow-purple-hover);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   GLASSMORPHISM EFFECT
+   ============================================ */
+.glass {
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-medium);
+}
+
+.glass:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-bright);
+}
+
+/* ============================================
+   TRANSITIONS & ANIMATIONS
+   ============================================ */
+.smooth-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+/* ============================================
+   SIDEBAR EFFECTS
+   ============================================ */
+.sidebar-item {
+    transition: all 0.3s ease;
+    color: var(--text-white);
+}
+
+.sidebar-item:hover {
+    background: var(--overlay-purple-medium);
+    transform: translateX(-8px);
+    border-right: 3px solid var(--accent-purple);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* ============================================
+   STARFIELD EFFECT
+   ============================================ */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background: var(--text-white);
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}

@@ -1,0 +1,202 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the Space Post community - Register your intergalactic account">
+    <title>New User Registration - Space Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
+</head>
+
+<body>
+    <!-- Starfield -->
+    <div class="stars" id="starfield"></div>
+
+    <!-- Cosmic orbs -->
+    <div class="cosmic-orb orb-1"></div>
+    <div class="cosmic-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <a href="{% url 'menu:menu' %}">
+            <div class="logo">SPACE POST</div>
+        </a>
+        <nav>
+            <form action="{% url 'menu:menu' %}">
+                <button class="nav-btn btn-login">Back to Home</button>
+            </form>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero-section">
+            <h1 class="hero-title">New User Registration</h1>
+            <p class="hero-subtitle">Join the Intergalactic Community</p>
+            <p class="hero-description">
+                Register your account and become part of the Space Post universe.
+                Share your voice across the cosmos and connect with beings from all corners of the galaxy.
+            </p>
+        </section>
+
+        <!-- Registration Form -->
+        <section class="features">
+            <div class="feature-card">
+                <form method="POST" action="{% url 'menu:menu_signup' %}">
+                    {% csrf_token %}
+
+                    <!-- Display form errors -->
+                    {% if form.errors %}
+                    <div class="form-error" style="margin-bottom: 1.5rem;">
+                        <strong>Please correct the following errors:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            {% for field in form %}
+                            {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="feature-title">Email Address *</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <span class="form-error">{{ form.email.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Must be unique and valid</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="username" class="feature-title">Username *</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <span class="form-error">{{ form.username.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Maximum 150 characters, must be unique</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="feature-title">Password *</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <span class="form-error">{{ form.password.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Choose a secure password</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Cellphone Number -->
+                    <div class="form-group">
+                        <label for="cellphone" class="feature-title">Cellphone Number</label>
+                        {{ form.cellphone_number }}
+                        {% if form.cellphone_number.errors %}
+                        <span class="form-error">{{ form.cellphone_number.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Country -->
+                    <div class="form-group">
+                        <label for="country" class="feature-title">Country</label>
+                        {{ form.country }}
+                        {% if form.country.errors %}
+                        <span class="form-error">{{ form.country.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Planet -->
+                    <div class="form-group">
+                        <label for="planet" class="feature-title">Planet of Origin</label>
+                        {{ form.planet }}
+                        {% if form.planet.errors %}
+                        <span class="form-error">{{ form.planet.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Where in the galaxy do you call home?</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Birth Date -->
+                    <div class="form-group">
+                        <label for="birth_date" class="feature-title">Birth Date</label>
+                        {{ form.birth_date }}
+                        {% if form.birth_date.errors %}
+                        <span class="form-error">{{ form.birth_date.errors.0 }}</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Genre -->
+                    <div class="form-group">
+                        <label for="genre" class="feature-title">Genre</label>
+                        {{ form.genre }}
+                        {% if form.genre.errors %}
+                        <span class="form-error">{{ form.genre.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Select your genre identity</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="cta-container">
+                        <button type="submit" class="cta-btn cta-primary">Create Account</button>
+                        <a href="{% url 'menu:menu' %}" class="cta-btn cta-secondary">Cancel</a>
+                    </div>
+                </form>
+
+                <div class="feature-text">
+                    <p>Already have an account? <a href="{% url 'menu:menu_login' %}">Log In</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Generate random stars
+        function createStars() {
+            const starfield = document.getElementById('starfield');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+
+                starfield.appendChild(star);
+            }
+        }
+
+        // Initialize stars on page load
+        createStars();
+    </script>
+</body>
+
+</html>

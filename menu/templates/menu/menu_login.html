@@ -1,0 +1,161 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Log in to your Space Post account">
+    <title>Account Login - Space Post</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
+</head>
+
+<body>
+    <!-- Starfield -->
+    <div class="stars" id="starfield"></div>
+
+    <!-- Cosmic orbs -->
+    <div class="cosmic-orb orb-1"></div>
+    <div class="cosmic-orb orb-2"></div>
+
+    <!-- Header -->
+    <header>
+        <a href="{% url 'menu:menu' %}">
+            <div class="logo">SPACE POST</div>
+        </a>
+        <nav>
+            <form action="{% url 'menu:menu' %}">
+                <button class="nav-btn btn-login">Back to Home</button>
+            </form>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero-section">
+            <h1 class="hero-title">Account Login</h1>
+            <p class="hero-subtitle">Welcome Back, Space Traveler</p>
+            <p class="hero-description">
+                Enter your credentials to access your intergalactic account and continue your journey across the cosmos.
+            </p>
+        </section>
+
+        <!-- Login Form -->
+        <section class="features">
+            <div class="feature-card">
+                <!-- Display Django Messages (success/error notifications) -->
+                {% if messages %}
+                <div style="margin-bottom: 1.5rem;">
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="form-error" style="margin-bottom: 1rem;">
+                        {{ message }}
+                    </div>
+                    {% elif message.tags == 'success' %}
+                    <div class="form-success" style="margin-bottom: 1rem;">
+                        {{ message }}
+                    </div>
+                    {% else %}
+                    <div style="margin-bottom: 1rem; color: var(--text-light);">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <form method="POST" action="{% url 'menu:menu_login' %}">
+                    {% csrf_token %}
+
+                    <!-- Display form errors -->
+                    {% if form.errors %}
+                    <div class="form-error" style="margin-bottom: 1.5rem;">
+                        <strong>Please correct the following errors:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            {% for field in form %}
+                            {% for error in field.errors %}
+                            <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    <!-- Username or Email -->
+                    <div class="form-group">
+                        <label for="username" class="feature-title">Username or Email *</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <span class="form-error">{{ form.username.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Enter your username or email address</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="feature-title">Password *</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <span class="form-error">{{ form.password.errors.0 }}</span>
+                        {% else %}
+                        <p class="feature-text">Enter your password</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="cta-container">
+                        <button type="submit" class="cta-btn cta-primary">Log In</button>
+                        <a href="{% url 'menu:menu' %}" class="cta-btn cta-secondary">Cancel</a>
+                    </div>
+                </form>
+
+                <div class="feature-text">
+                    <p>Don't have an account? <a href="{% url 'menu:menu_signup' %}">Create Account</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Generate random stars
+        function createStars() {
+            const starfield = document.getElementById('starfield');
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+
+                // Random animation delay
+                star.style.animationDelay = Math.random() * 3 + 's';
+
+                starfield.appendChild(star);
+            }
+        }
+
+        // Initialize stars on page load
+        createStars();
+    </script>
+</body>
+
+</html>
