@@ -15,6 +15,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
         rel="stylesheet">
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
 </head>
 
@@ -29,7 +32,13 @@
     <!-- Header -->
     <header>
         <a href="{% url 'menu:menu' %}">
-            <div class="logo">SPACE POST</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="w-10 h-10 rounded-full gradient-button flex items-center justify-center"
+                    style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%); display: flex; align-items: center; justify-content: center;">
+                    <i data-lucide="sparkles" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
+                </div>
+                <div class="logo">SPACE POST</div>
+            </div>
         </a>
         <nav>
             <form action="{% url 'menu:menu_signup' %}">
@@ -106,6 +115,9 @@
 
         // Initialize stars on page load
         createStars();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
 
         // Add click handlers for buttons (you can customize these)
         document.querySelectorAll('.nav-btn, .cta-btn').forEach(button => {

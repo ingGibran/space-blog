@@ -5,4 +5,6 @@ app_name = 'posts'
 
 urlpatterns = [
     path('', views.posts_view, name='posts'),
+    path('logout/', views.logout_view, name='logout'),
+
 ]

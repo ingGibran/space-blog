@@ -14,6 +14,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
         rel="stylesheet">
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
 </head>
 
@@ -28,7 +31,13 @@
     <!-- Header -->
     <header>
         <a href="{% url 'menu:menu' %}">
-            <div class="logo">SPACE POST</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="w-10 h-10 rounded-full gradient-button flex items-center justify-center"
+                    style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%); display: flex; align-items: center; justify-content: center;">
+                    <i data-lucide="sparkles" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
+                </div>
+                <div class="logo">SPACE POST</div>
+            </div>
         </a>
         <nav>
             <form action="{% url 'menu:menu' %}">
@@ -49,17 +58,17 @@
 
         <!-- Login Form -->
         <section class="features">
-            <div class="feature-card">
+            <div class="feature-card" style="max-width: 600px; margin: 0 auto;">
                 <!-- Display Django Messages (success/error notifications) -->
                 {% if messages %}
-                <div style="margin-bottom: 1.5rem;">
+                <div style="margin-bottom: 2rem;">
                     {% for message in messages %}
                     {% if message.tags == 'error' %}
-                    <div class="form-error" style="margin-bottom: 1rem;">
+                    <div class="form-error" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px;">
                         {{ message }}
                     </div>
                     {% elif message.tags == 'success' %}
-                    <div class="form-success" style="margin-bottom: 1rem;">
+                    <div class="form-success" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px;">
                         {{ message }}
                     </div>
                     {% else %}
@@ -76,9 +85,10 @@
 
                     <!-- Display form errors -->
                     {% if form.errors %}
-                    <div class="form-error" style="margin-bottom: 1.5rem;">
-                        <strong>Please correct the following errors:</strong>
-                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <div class="form-error"
+                        style="margin-bottom: 2rem; padding: 1.25rem; border-radius: 12px; background: rgba(244, 67, 54, 0.1); border: 2px solid rgba(244, 67, 54, 0.3);">
+                        <strong style="font-size: 1.1rem;">⚠ Please correct the following errors:</strong>
+                        <ul style="margin-top: 0.75rem; padding-left: 1.5rem; line-height: 1.8;">
                             {% for field in form %}
                             {% for error in field.errors %}
                             <li>{{ field.label }}: {{ error }}</li>
@@ -114,14 +124,17 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="cta-container">
+                    <div class="cta-container" style="margin-top: 2.5rem;">
                         <button type="submit" class="cta-btn cta-primary">Log In</button>
                         <a href="{% url 'menu:menu' %}" class="cta-btn cta-secondary">Cancel</a>
                     </div>
                 </form>
 
-                <div class="feature-text">
-                    <p>Don't have an account? <a href="{% url 'menu:menu_signup' %}">Create Account</a></p>
+                <div class="feature-text"
+                    style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle);">
+                    <p>Don't have an account? <a href="{% url 'menu:menu_signup' %}"
+                            style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">Create
+                            Account</a></p>
                 </div>
             </div>
         </section>
@@ -155,6 +168,9 @@
 
         // Initialize stars on page load
         createStars();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
     </script>
 </body>
 

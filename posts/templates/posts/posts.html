@@ -46,6 +46,12 @@
                         Hello, <span class="text-white font-semibold">{{ user.username }}</span>
                     </span>
 
+                    <!-- Post Button -->
+                    <button class="gradient-button px-4 py-2 rounded-lg smooth-transition flex items-center space-x-2">
+                        <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                        <span class="hidden md:inline">Post</span>
+                    </button>
+
                     <!-- Options Button -->
                     <button id="toggleSidebar"
                         class="glass px-4 py-2 rounded-lg smooth-transition hover:bg-purple-500/30 flex items-center space-x-2">
@@ -53,11 +59,6 @@
                         <span class="hidden md:inline">Options</span>
                     </button>
 
-                    <!-- Settings Button -->
-                    <button class="gradient-button px-4 py-2 rounded-lg smooth-transition flex items-center space-x-2">
-                        <i data-lucide="settings" class="w-5 h-5"></i>
-                        <span class="hidden md:inline">Settings</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -137,6 +138,13 @@
                     <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
                         <i data-lucide="user" class="w-5 h-5 text-purple-400"></i>
                         <span class="font-medium">Profile</span>
+                    </a>
+
+                    <!-- Logout -->
+                    <a href="{% url 'posts:logout' %}"
+                        class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                        <i data-lucide="log-out" class="w-5 h-5 text-purple-400"></i>
+                        <span class="font-medium">Logout</span>
                     </a>
                 </nav>
             </div>
@@ -247,51 +255,7 @@
                         </div>
                     </article>
 
-                    <!-- Sample Post 2 -->
-                    <article
-                        class="glass rounded-xl p-6 smooth-transition hover:bg-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20">
-                        <div class="flex items-start space-x-4">
-                            <!-- Author Avatar -->
-                            <div
-                                class="w-12 h-12 rounded-full gradient-button flex items-center justify-center flex-shrink-0">
-                                <i data-lucide="user" class="w-6 h-6"></i>
-                            </div>
 
-                            <!-- Post Content -->
-                            <div class="flex-1">
-                                <div class="flex items-center space-x-2 mb-2">
-                                    <span class="font-semibold text-white">Another Author</span>
-                                    <span class="text-purple-300 text-sm">• 5 hours ago</span>
-                                </div>
-                                <h4 class="text-lg font-semibold text-white mb-2">
-                                    Journey Through the Stars
-                                </h4>
-                                <p class="text-purple-200 mb-4">
-                                    Another sample post to demonstrate the feed layout. Your actual posts will appear
-                                    here with full content and interactions...
-                                </p>
-
-                                <!-- Post Actions -->
-                                <div class="flex items-center space-x-6 text-sm">
-                                    <button
-                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
-                                        <i data-lucide="heart" class="w-4 h-4"></i>
-                                        <span>87 likes</span>
-                                    </button>
-                                    <button
-                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
-                                        <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                        <span>23 comments</span>
-                                    </button>
-                                    <button
-                                        class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
-                                        <i data-lucide="share-2" class="w-4 h-4"></i>
-                                        <span>Share</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
                 </div>
 
             </div>

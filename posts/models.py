@@ -24,23 +24,23 @@ class Post(models.Model):
         verbose_name="Autor"
     )
     description = models.TextField(
-        verbose_name="Contenido"
+        verbose_name="Content"
     )
     likes_count = models.IntegerField(
         default=0,
-        verbose_name="Cantidad de likes"
+        verbose_name="Likes count"
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Fecha de creación"
+        verbose_name="Created at"
     )
     updated_at = models.DateTimeField(
         auto_now=True,
-        verbose_name="Fecha de actualización"
+        verbose_name="Updated at"
     )
     is_published = models.BooleanField(
         default=True,
-        verbose_name="Publicado"
+        verbose_name="Published"
     )
 
     class Meta:
@@ -57,6 +57,7 @@ class Post(models.Model):
         return self.title
 
 
+
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
@@ -68,20 +69,20 @@ class Comment(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='comments',
-        verbose_name="Autor"
+        verbose_name="Author"
     )
     text = models.TextField(
-        verbose_name="Comentario"
+        verbose_name="Comment"
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name="Fecha de creación"
+        verbose_name="Created at"
     )
 
     class Meta:
-        verbose_name = "Comentario"
-        verbose_name_plural = "Comentarios"
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
         ordering = ['created_at']
 
     def __str__(self):
-        return f"Comentario de {self.author.username} en {self.post.title}"
+        return f"Comment of {self.author.username} in {self.post.title}"

@@ -499,26 +499,45 @@ main {
 }
 
 /* ============================================
-   FORM STYLES - Signup Page
+   FORM STYLES - Enhanced Login & Signup Forms
    ============================================ */
+
+/* Form Container */
+.feature-card form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2rem;
+}
 
 /* Form Group Container */
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
-/* Form Labels */
+/* Form Labels - Enhanced */
 .form-group label {
     color: var(--text-light);
-    font-weight: 600;
-    font-size: 0.95rem;
+    font-weight: 700;
+    font-size: 1.1rem;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    text-align: left;
+    margin-bottom: 0.25rem;
+}
+
+/* Feature Title as Label */
+.feature-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-medium);
+    margin-bottom: 0.5rem;
+    text-align: left;
 }
 
 /* Required Field Indicator */
@@ -527,26 +546,27 @@ main {
     font-size: 1.2rem;
 }
 
-/* Form Inputs and Select */
+/* Form Inputs and Select - Enhanced */
 .form-group input,
 .form-group select {
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid var(--border-medium);
     border-radius: 12px;
     color: var(--text-light);
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     transition: all 0.3s ease;
     outline: none;
+    width: 100%;
 }
 
-/* Input Focus State */
+/* Input Focus State - Enhanced */
 .form-group input:focus,
 .form-group select:focus {
     border-color: var(--accent-purple);
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(187, 134, 252, 0.2);
     transform: translateY(-2px);
 }
 
@@ -554,13 +574,14 @@ main {
 .form-group input:hover,
 .form-group select:hover {
     border-color: var(--border-bright);
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* Placeholder Styling */
 .form-group input::placeholder {
     color: var(--text-soft);
-    opacity: 0.6;
+    opacity: 0.7;
+    font-size: 0.95rem;
 }
 
 /* Select Dropdown */
@@ -569,32 +590,34 @@ main {
     appearance: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23BB86FC' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
+    background-position: right 1.5rem center;
+    padding-right: 3rem;
 }
 
 /* Select Options */
 .form-group select option {
     background: var(--bg-dark);
     color: var(--text-light);
-    padding: 0.5rem;
+    padding: 0.75rem;
 }
 
 /* Input Validation States */
 .form-group input:valid:not(:placeholder-shown) {
-    border-color: rgba(139, 195, 74, 0.5);
+    border-color: rgba(139, 195, 74, 0.6);
 }
 
 .form-group input:invalid:not(:placeholder-shown) {
-    border-color: rgba(244, 67, 54, 0.5);
+    border-color: rgba(244, 67, 54, 0.6);
 }
 
-/* Form Hint Text */
-.form-hint {
-    font-size: 0.85rem;
+/* Form Hint Text - Enhanced */
+.form-hint,
+.feature-text {
+    font-size: 0.9rem;
     color: var(--text-soft);
     font-style: italic;
-    margin-top: -0.5rem;
+    margin-top: 0.25rem;
+    line-height: 1.4;
 }
 
 /* Date Input Styling */

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'posts',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -124,11 +125,18 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Redirects
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'posts'
+LOGOUT_REDIRECT_URL = 'menu'
+
+
 # Use CustomUser model as the default user model
 AUTH_USER_MODEL = 'menu.CustomUser'
 
 # Use custom authentication backend
 AUTHENTICATION_BACKENDS = [
+    # Custom authentication backend
     'menu.backends.UsernameOrEmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]

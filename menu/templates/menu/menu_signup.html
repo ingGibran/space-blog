@@ -14,6 +14,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@500;700;900&display=swap"
         rel="stylesheet">
 
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <link rel="stylesheet" href="{% static 'menu/styles.css' %}">
 </head>
 
@@ -28,7 +31,13 @@
     <!-- Header -->
     <header>
         <a href="{% url 'menu:menu' %}">
-            <div class="logo">SPACE POST</div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div
+                    style="width: 2.5rem; height: 2.5rem; border-radius: 50%; background: linear-gradient(135deg, #9f7aea 0%, #b794f6 100%); display: flex; align-items: center; justify-content: center;">
+                    <i data-lucide="sparkles" style="width: 1.5rem; height: 1.5rem; color: white;"></i>
+                </div>
+                <div class="logo">SPACE POST</div>
+            </div>
         </a>
         <nav>
             <form action="{% url 'menu:menu' %}">
@@ -50,15 +59,16 @@
 
         <!-- Registration Form -->
         <section class="features">
-            <div class="feature-card">
+            <div class="feature-card" style="max-width: 650px; margin: 0 auto;">
                 <form method="POST" action="{% url 'menu:menu_signup' %}">
                     {% csrf_token %}
 
                     <!-- Display form errors -->
                     {% if form.errors %}
-                    <div class="form-error" style="margin-bottom: 1.5rem;">
-                        <strong>Please correct the following errors:</strong>
-                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <div class="form-error"
+                        style="margin-bottom: 2rem; padding: 1.25rem; border-radius: 12px; background: rgba(244, 67, 54, 0.1); border: 2px solid rgba(244, 67, 54, 0.3);">
+                        <strong style="font-size: 1.1rem;">⚠ Please correct the following errors:</strong>
+                        <ul style="margin-top: 0.75rem; padding-left: 1.5rem; line-height: 1.8;">
                             {% for field in form %}
                             {% for error in field.errors %}
                             <li>{{ field.label }}: {{ error }}</li>
@@ -71,97 +81,114 @@
                     </div>
                     {% endif %}
 
-                    <!-- Email -->
-                    <div class="form-group">
-                        <label for="email" class="feature-title">Email Address *</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                        <span class="form-error">{{ form.email.errors.0 }}</span>
-                        {% else %}
-                        <p class="feature-text">Must be unique and valid</p>
-                        {% endif %}
+                    <!-- Account Information Section -->
+                    <div style="margin-bottom: 2.5rem;">
+                        <h3
+                            style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: var(--accent-purple); margin-bottom: 1.5rem; text-align: center;">
+                            Account Information</h3>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email" class="feature-title">Email Address *</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                            <span class="form-error">{{ form.email.errors.0 }}</span>
+                            {% else %}
+                            <p class="feature-text">Must be unique and valid</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Username -->
+                        <div class="form-group">
+                            <label for="username" class="feature-title">Username *</label>
+                            {{ form.username }}
+                            {% if form.username.errors %}
+                            <span class="form-error">{{ form.username.errors.0 }}</span>
+                            {% else %}
+                            <p class="feature-text">Maximum 150 characters, must be unique</p>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-group">
+                            <label for="password" class="feature-title">Password *</label>
+                            {{ form.password }}
+                            {% if form.password.errors %}
+                            <span class="form-error">{{ form.password.errors.0 }}</span>
+                            {% else %}
+                            <p class="feature-text">Choose a secure password</p>
+                            {% endif %}
+                        </div>
                     </div>
 
-                    <!-- Username -->
-                    <div class="form-group">
-                        <label for="username" class="feature-title">Username *</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                        <span class="form-error">{{ form.username.errors.0 }}</span>
-                        {% else %}
-                        <p class="feature-text">Maximum 150 characters, must be unique</p>
-                        {% endif %}
-                    </div>
+                    <!-- Personal Information Section -->
+                    <div style="margin-bottom: 2.5rem; padding-top: 2rem; border-top: 2px solid var(--border-medium);">
+                        <h3
+                            style="font-family: 'Orbitron', sans-serif; font-size: 1.3rem; color: var(--accent-purple); margin-bottom: 1.5rem; text-align: center;">
+                            Personal Information</h3>
 
-                    <!-- Password -->
-                    <div class="form-group">
-                        <label for="password" class="feature-title">Password *</label>
-                        {{ form.password }}
-                        {% if form.password.errors %}
-                        <span class="form-error">{{ form.password.errors.0 }}</span>
-                        {% else %}
-                        <p class="feature-text">Choose a secure password</p>
-                        {% endif %}
-                    </div>
+                        <!-- Cellphone Number -->
+                        <div class="form-group">
+                            <label for="cellphone" class="feature-title">Cellphone Number</label>
+                            {{ form.cellphone_number }}
+                            {% if form.cellphone_number.errors %}
+                            <span class="form-error">{{ form.cellphone_number.errors.0 }}</span>
+                            {% endif %}
+                        </div>
 
-                    <!-- Cellphone Number -->
-                    <div class="form-group">
-                        <label for="cellphone" class="feature-title">Cellphone Number</label>
-                        {{ form.cellphone_number }}
-                        {% if form.cellphone_number.errors %}
-                        <span class="form-error">{{ form.cellphone_number.errors.0 }}</span>
-                        {% endif %}
-                    </div>
+                        <!-- Country -->
+                        <div class="form-group">
+                            <label for="country" class="feature-title">Country</label>
+                            {{ form.country }}
+                            {% if form.country.errors %}
+                            <span class="form-error">{{ form.country.errors.0 }}</span>
+                            {% endif %}
+                        </div>
 
-                    <!-- Country -->
-                    <div class="form-group">
-                        <label for="country" class="feature-title">Country</label>
-                        {{ form.country }}
-                        {% if form.country.errors %}
-                        <span class="form-error">{{ form.country.errors.0 }}</span>
-                        {% endif %}
-                    </div>
+                        <!-- Planet -->
+                        <div class="form-group">
+                            <label for="planet" class="feature-title">Planet of Origin</label>
+                            {{ form.planet }}
+                            {% if form.planet.errors %}
+                            <span class="form-error">{{ form.planet.errors.0 }}</span>
+                            {% else %}
+                            <p class="feature-text">Where in the galaxy do you call home?</p>
+                            {% endif %}
+                        </div>
 
-                    <!-- Planet -->
-                    <div class="form-group">
-                        <label for="planet" class="feature-title">Planet of Origin</label>
-                        {{ form.planet }}
-                        {% if form.planet.errors %}
-                        <span class="form-error">{{ form.planet.errors.0 }}</span>
-                        {% else %}
-                        <p class="feature-text">Where in the galaxy do you call home?</p>
-                        {% endif %}
-                    </div>
+                        <!-- Birth Date -->
+                        <div class="form-group">
+                            <label for="birth_date" class="feature-title">Birth Date</label>
+                            {{ form.birth_date }}
+                            {% if form.birth_date.errors %}
+                            <span class="form-error">{{ form.birth_date.errors.0 }}</span>
+                            {% endif %}
+                        </div>
 
-                    <!-- Birth Date -->
-                    <div class="form-group">
-                        <label for="birth_date" class="feature-title">Birth Date</label>
-                        {{ form.birth_date }}
-                        {% if form.birth_date.errors %}
-                        <span class="form-error">{{ form.birth_date.errors.0 }}</span>
-                        {% endif %}
-                    </div>
-
-                    <!-- Genre -->
-                    <div class="form-group">
-                        <label for="genre" class="feature-title">Genre</label>
-                        {{ form.genre }}
-                        {% if form.genre.errors %}
-                        <span class="form-error">{{ form.genre.errors.0 }}</span>
-                        {% else %}
-                        <p class="feature-text">Select your genre identity</p>
-                        {% endif %}
+                        <!-- Genre -->
+                        <div class="form-group">
+                            <label for="genre" class="feature-title">Genre</label>
+                            {{ form.genre }}
+                            {% if form.genre.errors %}
+                            <span class="form-error">{{ form.genre.errors.0 }}</span>
+                            {% else %}
+                            <p class="feature-text">Select your genre identity</p>
+                            {% endif %}
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="cta-container">
+                    <div class="cta-container" style="margin-top: 2.5rem;">
                         <button type="submit" class="cta-btn cta-primary">Create Account</button>
                         <a href="{% url 'menu:menu' %}" class="cta-btn cta-secondary">Cancel</a>
                     </div>
                 </form>
 
-                <div class="feature-text">
-                    <p>Already have an account? <a href="{% url 'menu:menu_login' %}">Log In</a>
+                <div class="feature-text"
+                    style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle);">
+                    <p>Already have an account? <a href="{% url 'menu:menu_login' %}"
+                            style="color: var(--accent-purple); font-weight: 600; text-decoration: underline;">Log
+                            In</a>
                     </p>
                 </div>
             </div>
@@ -196,6 +223,9 @@
 
         // Initialize stars on page load
         createStars();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
     </script>
 </body>
 
