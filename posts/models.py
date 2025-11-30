@@ -1,15 +1,42 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
+
+class Topic(models.Model):
+    name = models.CharField(
+        max_length=50,
+        unique=True,
+        verbose_name="Topic"
+    )
+    slug = models.SlugField(
+        max_length=60,
+        unique=True,
+        blank=True,
+        verbose_name="Slug"
+    )
+
+    class Meta:
+        verbose_name = "Topic"
+        verbose_name_plural = "Topics"
+        ordering = ['name']
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(
         max_length=255,
         unique=True,
-        verbose_name="Título"
+        verbose_name="Title"
     )
     slug = models.SlugField(
         max_length=255,
@@ -25,6 +52,18 @@ class Post(models.Model):
     )
     description = models.TextField(
         verbose_name="Content"
+    )
+    image = models.ImageField(
+        upload_to="posts_images/",
+        blank=True,
+        null=True,
+        verbose_name="Image"
+    )
+    topics = models.ManyToManyField(
+        Topic,
+        related_name='posts',
+        blank=True,
+        verbose_name="Topics"
     )
     likes_count = models.IntegerField(
         default=0,
@@ -47,6 +86,11 @@ class Post(models.Model):
         verbose_name = "Post"
         verbose_name_plural = "Posts"
         ordering = ['-created_at']
+
+    def clean(self):
+        super().clean()
+        if self.pk and self.topics.count() > 3:
+            raise ValidationError("A post can have at most 3 topics.")
 
     def save(self, *args, **kwargs):
         if not self.slug:

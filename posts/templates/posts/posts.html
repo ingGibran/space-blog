@@ -19,7 +19,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <link rel="stylesheet" href="{% static 'posts/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'posts/styles.css' %}?v=3">
 </head>
 
 <body class="gradient-purple min-h-screen text-white">
@@ -47,7 +47,8 @@
                     </span>
 
                     <!-- Post Button -->
-                    <button class="gradient-button px-4 py-2 rounded-lg smooth-transition flex items-center space-x-2">
+                    <button id="openModalBtnTop"
+                        class="gradient-button px-4 py-2 rounded-lg smooth-transition flex items-center space-x-2">
                         <i data-lucide="plus-circle" class="w-5 h-5"></i>
                         <span class="hidden md:inline">Post</span>
                     </button>
@@ -89,7 +90,8 @@
                     </a>
 
                     <!-- New Post -->
-                    <a href="#" class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
+                    <a href="#" id="openModalSidebar"
+                        class="sidebar-item flex items-center space-x-3 px-4 py-3 rounded-lg smooth-transition">
                         <i data-lucide="plus-circle" class="w-5 h-5 text-purple-400"></i>
                         <span class="font-medium">New Post</span>
                     </a>
@@ -156,60 +158,27 @@
             <div class="max-w-4xl mx-auto">
 
                 <!-- Page Header -->
-                <div class="mb-8">
-                    <h1
-                        class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
-                        Your Feed
-                    </h1>
-                    <p class="text-purple-200">
-                        Discover the latest posts from the community
-                    </p>
+                <div class="mb-8 flex items-center justify-between">
+                    <div>
+                        <h1
+                            class="text-3xl sm:text-4xl font-bold mb-2 bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent">
+                            Posts
+                        </h1>
+                        <p class="text-purple-200">
+                            Share your thoughts with the community
+                        </p>
+                    </div>
+                    <button id="openModalBtn"
+                        class="gradient-button px-6 py-3 rounded-lg font-semibold smooth-transition hover:shadow-lg hover:shadow-purple-500/50 flex items-center space-x-2">
+                        <i data-lucide="plus" class="w-5 h-5"></i>
+                        <span>New Post</span>
+                    </button>
                 </div>
 
-                <!-- Placeholder Content -->
-                <div class="glass rounded-2xl p-12 text-center min-h-[500px] flex flex-col items-center justify-center">
-                    <!-- Sparkle Icon -->
-                    <div class="mb-6 relative">
-                        <div class="w-24 h-24 rounded-full gradient-button flex items-center justify-center sparkle">
-                            <i data-lucide="rss" class="w-12 h-12"></i>
-                        </div>
-                        <!-- Decorative circles -->
-                        <div class="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-pink-500 opacity-50 sparkle"
-                            style="animation-delay: 0.5s;"></div>
-                        <div class="absolute -bottom-2 -left-2 w-6 h-6 rounded-full bg-purple-500 opacity-50 sparkle"
-                            style="animation-delay: 1s;"></div>
-                    </div>
-
-                    <h2 class="text-2xl font-bold mb-3 text-white">
-                        Future Post Feed
-                    </h2>
-                    <p class="text-purple-200 mb-6 max-w-md">
-                        This is where your blog posts will appear. The feed will display posts from authors you follow
-                        and trending content.
-                    </p>
-
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button
-                            class="gradient-button px-6 py-3 rounded-lg font-semibold smooth-transition hover:shadow-lg hover:shadow-purple-500/50 flex items-center space-x-2">
-                            <i data-lucide="plus" class="w-5 h-5"></i>
-                            <span>Create Your First Post</span>
-                        </button>
-                        <button
-                            class="glass px-6 py-3 rounded-lg font-semibold smooth-transition hover:bg-purple-500/30 flex items-center space-x-2">
-                            <i data-lucide="search" class="w-5 h-5"></i>
-                            <span>Explore Posts</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Sample Post Cards (for demonstration) -->
-                <div class="mt-8 space-y-6">
-                    <h3 class="text-xl font-semibold text-purple-200 mb-4">
-                        Preview: Sample Posts
-                    </h3>
-
-                    <!-- Sample Post 1 -->
+                <!-- Posts List -->
+                <div class="space-y-6">
+                    {% if posts %}
+                    {% for post in posts %}
                     <article
                         class="glass rounded-xl p-6 smooth-transition hover:bg-purple-500/10 hover:shadow-lg hover:shadow-purple-500/20">
                         <div class="flex items-start space-x-4">
@@ -222,15 +191,22 @@
                             <!-- Post Content -->
                             <div class="flex-1">
                                 <div class="flex items-center space-x-2 mb-2">
-                                    <span class="font-semibold text-white">Author Name</span>
-                                    <span class="text-purple-300 text-sm">• 2 hours ago</span>
+                                    <span class="font-semibold text-white">{{ post.author.username }}</span>
+                                    <span class="text-purple-300 text-sm">• {{ post.created_at|timesince }} ago</span>
                                 </div>
                                 <h4 class="text-lg font-semibold text-white mb-2">
-                                    Sample Post Title: Exploring the Cosmos
+                                    {{ post.title }}
                                 </h4>
-                                <p class="text-purple-200 mb-4">
-                                    This is a sample post description. In the future, this area will display the actual
-                                    content from your blog posts...
+
+                                {% if post.image %}
+                                <div class="mb-4">
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}"
+                                        class="post-image rounded-lg max-w-full h-auto">
+                                </div>
+                                {% endif %}
+
+                                <p class="text-purple-200 mb-4 post-description">
+                                    {{ post.description }}
                                 </p>
 
                                 <!-- Post Actions -->
@@ -238,12 +214,12 @@
                                     <button
                                         class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
                                         <i data-lucide="heart" class="w-4 h-4"></i>
-                                        <span>42 likes</span>
+                                        <span>{{ post.likes_count }} likes</span>
                                     </button>
                                     <button
                                         class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
                                         <i data-lucide="message-circle" class="w-4 h-4"></i>
-                                        <span>12 comments</span>
+                                        <span>{{ post.comments.count }} comments</span>
                                     </button>
                                     <button
                                         class="flex items-center space-x-2 text-purple-300 hover:text-purple-200 smooth-transition">
@@ -254,13 +230,121 @@
                             </div>
                         </div>
                     </article>
-
-
+                    {% endfor %}
+                    {% else %}
+                    <!-- Empty State -->
+                    <div class="glass rounded-2xl p-12 text-center">
+                        <div class="mb-6 relative inline-block">
+                            <div
+                                class="w-24 h-24 rounded-full gradient-button flex items-center justify-center sparkle">
+                                <i data-lucide="file-text" class="w-12 h-12"></i>
+                            </div>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-3 text-white">
+                            No Posts Yet
+                        </h2>
+                        <p class="text-purple-200 mb-6 max-w-md mx-auto">
+                            Be the first to share something! Click the "New Post" button to create your first post.
+                        </p>
+                    </div>
+                    {% endif %}
                 </div>
 
             </div>
         </main>
 
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="postModal" class="modal-overlay">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h2 class="text-2xl font-bold text-white">Create New Post</h2>
+                <button id="closeModalBtn" class="modal-close">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" id="postForm">
+                    {% csrf_token %}
+
+                    <!-- Title Field -->
+                    <div class="form-group">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}
+                        <div class="form-error">{{ form.title.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Content</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                        <div class="form-error">{{ form.description.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Image Field -->
+                    <div class="form-group">
+                        <label for="{{ form.image.id_for_label }}" class="form-label">Image (optional)</label>
+                        <div class="file-input-wrapper">
+                            {{ form.image }}
+                        </div>
+                        {% if form.image.errors %}
+                        <div class="form-error">{{ form.image.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Topics Field -->
+                    <div class="form-group">
+                        <label class="form-label">Choose up to 3 topics</label>
+                        <div class="topics-container" id="topicsContainer">
+                            {% for choice in form.topics %}
+                            <div class="topic-checkbox">
+                                {{ choice.tag }}
+                                <label for="{{ choice.id_for_label }}" class="topic-label">
+                                    {{ choice.choice_label }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if form.topics.errors %}
+                        <div class="form-error">{{ form.topics.errors.0 }}</div>
+                        {% endif %}
+                        <div id="topicLimitWarning" class="topic-warning" style="display: none;">
+                            You can only select up to 3 topics
+                        </div>
+                    </div>
+
+                    <!-- Published Field -->
+                    <div class="form-group-checkbox">
+                        {{ form.is_published }}
+                        <label for="{{ form.is_published.id_for_label }}" class="checkbox-label">
+                            Publish immediately
+                        </label>
+                        {% if form.is_published.errors %}
+                        <div class="form-error">{{ form.is_published.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="modal-footer">
+                        <button type="button" id="cancelBtn" class="btn-secondary">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i data-lucide="send" class="w-5 h-5"></i>
+                            <span>Publish Post</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
     <!-- Initialize Lucide Icons -->
@@ -274,17 +358,14 @@
 
         function openSidebar() {
             rightSidebar.classList.remove('hidden');
-            // Small delay to allow display change before animation
             setTimeout(() => {
                 rightSidebar.classList.remove('translate-x-full');
             }, 10);
-            // Re-initialize icons for the sidebar
             lucide.createIcons();
         }
 
         function closeSidebar() {
             rightSidebar.classList.add('translate-x-full');
-            // Wait for animation to complete before hiding
             setTimeout(() => {
                 rightSidebar.classList.add('hidden');
             }, 300);
@@ -300,7 +381,6 @@
 
         closeSidebarBtn.addEventListener('click', closeSidebar);
 
-        // Close sidebar when clicking outside (optional)
         document.addEventListener('click', (e) => {
             if (!rightSidebar.contains(e.target) &&
                 !toggleSidebarBtn.contains(e.target) &&
@@ -308,6 +388,87 @@
                 !rightSidebar.classList.contains('translate-x-full')) {
                 closeSidebar();
             }
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('postModal');
+        const openModalBtn = document.getElementById('openModalBtn');
+        const openModalBtnTop = document.getElementById('openModalBtnTop');
+        const openModalSidebar = document.getElementById('openModalSidebar');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        function openModal() {
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        openModalBtn.addEventListener('click', openModal);
+        openModalBtnTop.addEventListener('click', openModal);
+        openModalSidebar.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+            closeSidebar();
+        });
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Topic selection limit (max 3)
+        const topicCheckboxes = document.querySelectorAll('.topic-checkbox input[type="checkbox"]');
+        const topicWarning = document.getElementById('topicLimitWarning');
+        const MAX_TOPICS = 3;
+
+        function updateTopicSelection() {
+            const checkedCount = document.querySelectorAll('.topic-checkbox input[type="checkbox"]:checked').length;
+
+            if (checkedCount >= MAX_TOPICS) {
+                // Disable ONLY unchecked boxes, keep checked ones clickable for deselection
+                topicCheckboxes.forEach(checkbox => {
+                    if (!checkbox.checked) {
+                        checkbox.disabled = true;
+                        checkbox.parentElement.classList.add('topic-disabled');
+                    } else {
+                        // Keep checked boxes enabled so they can be deselected
+                        checkbox.disabled = false;
+                        checkbox.parentElement.classList.remove('topic-disabled');
+                    }
+                });
+                // Show warning only if somehow more than max were selected
+                if (checkedCount > MAX_TOPICS) {
+                    topicWarning.style.display = 'block';
+                } else {
+                    topicWarning.style.display = 'none';
+                }
+            } else {
+                // Enable all boxes when under the limit
+                topicCheckboxes.forEach(checkbox => {
+                    checkbox.disabled = false;
+                    checkbox.parentElement.classList.remove('topic-disabled');
+                });
+                topicWarning.style.display = 'none';
+            }
+        }
+
+        topicCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateTopicSelection);
         });
     </script>
 
