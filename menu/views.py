@@ -23,7 +23,7 @@ def menu_signup_view(request):
             user.save()
             
             messages.success(request, 'Successful registration! You can now log in.')
-            return redirect('menu')
+            return redirect('posts:posts')
         
     else:
         form = SignupForm()

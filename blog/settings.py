@@ -130,9 +130,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirects
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'posts'
-LOGOUT_REDIRECT_URL = 'menu'
+LOGIN_URL = 'menu:menu_login'
+LOGIN_REDIRECT_URL = 'posts:posts'
+LOGOUT_REDIRECT_URL = 'menu:menu'
 
 
 # Use CustomUser model as the default user model

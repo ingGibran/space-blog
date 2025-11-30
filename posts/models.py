@@ -32,6 +32,8 @@ class Topic(models.Model):
     def __str__(self):
         return self.name
 
+
+
 class Post(models.Model):
     title = models.CharField(
         max_length=255,
@@ -65,9 +67,11 @@ class Post(models.Model):
         blank=True,
         verbose_name="Topics"
     )
-    likes_count = models.IntegerField(
-        default=0,
-        verbose_name="Likes count"
+    likes = models.ManyToManyField(
+        User,
+        through='Like',
+        related_name='liked_posts',
+        verbose_name='Likes'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -87,6 +91,10 @@ class Post(models.Model):
         verbose_name_plural = "Posts"
         ordering = ['-created_at']
 
+    @property
+    def total_likes(self):
+        return self.likes.count()   
+
     def clean(self):
         super().clean()
         if self.pk and self.topics.count() > 3:
@@ -100,6 +108,32 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
+
+class Like(models.Model):
+    post = models.ForeignKey(
+        'Post',
+        on_delete=models.CASCADE,
+        related_name='likes_received'
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='likes_given'
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        unique_together = ('user', 'post')
+        verbose_name = 'Like'
+        verbose_name_plural = 'Likes'
+
+    def __str__(self):
+        return f"Like of {self.user.username} in {self.post.title}" 
 
 
 class Comment(models.Model):
