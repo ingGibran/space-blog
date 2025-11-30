@@ -165,6 +165,58 @@ def delete_comment(request, comment_id):
         }, status=403)
 
 @login_required
+@require_POST
+def delete_post(request, post_id):
+    """
+    AJAX view to delete a post.
+    Only allows deletion if user is the post author.
+    """
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Permission check: user must be post author
+    if request.user == post.author:
+        post_id = post.id
+        
+        # Delete the post
+        post.delete()
+        
+        return JsonResponse({
+            'success': True,
+            'post_id': post_id
+        })
+    else:
+        return JsonResponse({
+            'success': False,
+            'error': 'You do not have permission to delete this post'
+        }, status=403)
+
+@login_required
+@require_POST
+def toggle_publish_post(request, post_id):
+    """
+    AJAX view to toggle post publication status.
+    Only allows toggling if user is the post author.
+    """
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Permission check: user must be post author
+    if request.user == post.author:
+        # Toggle the is_published field
+        post.is_published = not post.is_published
+        post.save()
+        
+        return JsonResponse({
+            'success': True,
+            'post_id': post.id,
+            'is_published': post.is_published
+        })
+    else:
+        return JsonResponse({
+            'success': False,
+            'error': 'You do not have permission to modify this post'
+        }, status=403)
+
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('menu:menu')
